@@ -1,0 +1,19 @@
+li{
+list-style: none;
+}
+body{
+    background: darkgrey;
+}
+#block-pass-login{
+    width: 250px;
+    margin: 100px auto;
+    background: white;
+    padding: 10px;
+    border: 1px solid grey;
+}
+#submit_enter{
+    cursor: pointer;
+}
+#message-auth {
+    display: none;
+}
