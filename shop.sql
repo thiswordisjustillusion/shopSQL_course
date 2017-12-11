@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Дек 09 2017 г., 00:40
+-- Время создания: Дек 11 2017 г., 23:18
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.3.13
 
@@ -19,6 +19,26 @@ SET time_zone = "+00:00";
 --
 -- База данных: `shop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `admin`
+--
+
+CREATE TABLE IF NOT EXISTS `admin` (
+  `admin_id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_login` varchar(255) NOT NULL,
+  `admin_pass` varchar(255) NOT NULL,
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Дамп данных таблицы `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `admin_login`, `admin_pass`) VALUES
+(1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -78,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `user_id` (`user_id`),
   KEY `user_id_2` (`user_id`,`dostavka_id`),
   KEY `user_id_3` (`user_id`,`dostavka_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Дамп данных таблицы `orders`
@@ -102,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `order_shop` (
   PRIMARY KEY (`order_shop_id`),
   KEY `order_id` (`order_id`,`shop_id`),
   KEY `shop_id` (`shop_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Дамп данных таблицы `order_shop`
@@ -160,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `date` date NOT NULL,
   `ip` varchar(16) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Дамп данных таблицы `user`
@@ -177,15 +197,15 @@ INSERT INTO `user` (`user_id`, `user_name`, `user_fam`, `user_tel`, `user_addres
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`dostavka_id`) REFERENCES `dostavka` (`dostavka_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`dostavka_id`) REFERENCES `dostavka` (`dostavka_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `order_shop`
 --
 ALTER TABLE `order_shop`
-  ADD CONSTRAINT `order_shop_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `order_shop_ibfk_1` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`shop_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `order_shop_ibfk_1` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`shop_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_shop_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `shop`
